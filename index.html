@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meal Time Calculator</title>
+    <script src="script.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -65,87 +66,17 @@
 
     <label for="wakeup-time">Enter your wakeup time (HH:MM):</label>
     <input type="time" id="wakeup-time" required>
+    <div>
+        <button onclick="setWakeupTime('07:00')">7AM</button>
+        <button onclick="setWakeupTime('08:00')">8AM</button>
+        <button onclick="setWakeupTime('09:00')">9AM</button>
+    </div>
 
     <div class="meal-times" id="meal-times"></div>
 
     <footer>
         <p>View the source code on <a href="https://github.com/Guthers" target="_blank">GitHub</a></p>
     </footer>
-
-    <script>
-        document.getElementById('wakeup-time').addEventListener('input', calculateMealTimes);
-
-        function calculateMealTimes() {
-            const wakeupTimeInput = document.getElementById('wakeup-time').value;
-            if (!wakeupTimeInput) {
-                return;
-            }
-
-            const wakeupTime = new Date(`1970-01-01T${wakeupTimeInput}:00`);
-
-            const breakfastTime = new Date(wakeupTime.getTime() + 1 * 60 * 60 * 1000);
-            const midMorningSnackTime = new Date(breakfastTime.getTime() + 3 * 60 * 60 * 1000);
-            const lunchTime = new Date(breakfastTime.getTime() + 5 * 60 * 60 * 1000);
-            const arvoSnackTime = new Date(lunchTime.getTime() + 3 * 60 * 60 * 1000);
-            const dinnerTime = new Date(lunchTime.getTime() + 5 * 60 * 60 * 1000);
-
-            const mealTimes = {
-                'Breakfast': {
-                    time: breakfastTime,
-                    rangeStart: new Date(wakeupTime.getTime() + 1 * 60 * 60 * 1000),
-                    rangeEnd: new Date(wakeupTime.getTime() + 1 * 60 * 60 * 1000),
-                },
-                'Mid-morning Snack': {
-                    time: midMorningSnackTime,
-                    rangeStart: new Date(breakfastTime.getTime() + 2 * 60 * 60 * 1000),
-                    rangeEnd: new Date(breakfastTime.getTime() + 3 * 60 * 60 * 1000),
-                },
-                'Lunch': {
-                    time: lunchTime,
-                    rangeStart: new Date(breakfastTime.getTime() + 4 * 60 * 60 * 1000),
-                    rangeEnd: new Date(breakfastTime.getTime() + 5 * 60 * 60 * 1000),
-                },
-                'Afternoon Snack': {
-                    time: arvoSnackTime,
-                    rangeStart: new Date(lunchTime.getTime() + 2 * 60 * 60 * 1000),
-                    rangeEnd: new Date(lunchTime.getTime() + 3 * 60 * 60 * 1000),
-                },
-                'Dinner': {
-                    time: dinnerTime,
-                    rangeStart: new Date(lunchTime.getTime() + 4 * 60 * 60 * 1000),
-                    rangeEnd: new Date(lunchTime.getTime() + 5 * 60 * 60 * 1000),
-                }
-            };
-
-            const mealTimesDiv = document.getElementById('meal-times');
-            mealTimesDiv.innerHTML = '';
-
-            for (let meal in mealTimes) {
-                const mealTime = mealTimes[meal];
-                const timeStr = formatTime(mealTime.time);
-                const rangeStartStr = formatTime(mealTime.rangeStart);
-                const rangeEndStr = formatTime(mealTime.rangeEnd);
-                let rangeStr = `Between ${rangeStartStr} and ${rangeEndStr}`;
-
-                if (meal === "Breakfast") {
-                    rangeStr = "Within an hour of waking up";
-                }
-
-                mealTimesDiv.innerHTML += `
-                    <div class="meal-time">
-                        <strong>${meal}</strong>: ${timeStr}
-                        <div class="range">${rangeStr}</div>
-                    </div>
-                `;
-            }
-        }
-
-        function formatTime(date) {
-            const hours = String(date.getHours()).padStart(2, '0');
-            const minutes = String(date.getMinutes()).padStart(2, '0');
-            return `${hours}:${minutes}`;
-        }
-    </script>
-
+    <script>document.getElementById('wakeup-time').addEventListener('input', calculateMealTimes);</script>
 </body>
 </html>
