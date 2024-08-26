@@ -1,67 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meal Time Calculator</title>
-    <script src="script.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 50px;
-            line-height: 1.6;
-        }
-        label, input {
-            font-size: 1.2em;
-        }
-        input {
-            margin: 10px 0;
-            padding: 5px;
-        }
-        .meal-times {
-            margin-top: 20px;
-        }
-        .meal-time {
-            margin-bottom: 15px;
-        }
-        .range {
-            color: gray;
-            font-size: 0.9em;
-        }
-        .description {
-            margin: 20px 0;
-            font-size: 1.1em;
-            color: #555;
-        }
-        .description a {
-            color: #007BFF;
-            text-decoration: none;
-        }
-        .description a:hover {
-            text-decoration: underline;
-        }
-        footer {
-            margin-top: 50px;
-            font-size: 0.9em;
-            text-align: center;
-            color: #777;
-        }
-        footer a {
-            color: #007BFF;
-            text-decoration: none;
-        }
-        footer a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 
     <h1>Meal Time Calculator</h1>
     <div class="description">
-        Enter your wakeup time below to automatically calculate the optimal times for your meals throughout the day. The ranges provided indicate the flexibility you have for each meal.
+        Enter your wakeup time below to automatically calculate the optimal times for your meals throughout the day. The
+        ranges provided indicate the flexibility you have for each meal.
         <br><br>
-        Please note that this tool is not a substitute for professional nutritional advice. The information provided is based on general guidelines from <a href="https://hub.health/program-support-nutrition/" target="_blank">Hub Health</a>. Always consult with a nutritionist or healthcare provider for personalized advice.
+        Please note that this tool is not a substitute for professional nutritional advice. The information provided is
+        based on general guidelines from <a href="https://hub.health/program-support-nutrition/" target="_blank">Hub
+            Health</a>. Always consult with a nutritionist or healthcare provider for personalized advice.
     </div>
 
     <label for="wakeup-time">Enter your wakeup time (HH:MM):</label>
@@ -73,10 +29,14 @@
     </div>
 
     <div class="meal-times" id="meal-times"></div>
+    <div class="indicator-container" id="indicator-container">
+        <!-- Hour lines will be added here by JavaScript -->
+    </div>
 
     <footer>
         <p>View the source code on <a href="https://github.com/Guthers" target="_blank">GitHub</a></p>
     </footer>
-    <script>document.getElementById('wakeup-time').addEventListener('input', calculateMealTimes);</script>
+    <script src="script.js"></script>
 </body>
+
 </html>
