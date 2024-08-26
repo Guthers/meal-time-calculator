@@ -125,11 +125,16 @@
                 const timeStr = formatTime(mealTime.time);
                 const rangeStartStr = formatTime(mealTime.rangeStart);
                 const rangeEndStr = formatTime(mealTime.rangeEnd);
+                let rangeStr = `Between ${rangeStartStr} and ${rangeEndStr}`;
+
+                if (meal === "Breakfast") {
+                    rangeStr = "Within an hour of waking up";
+                }
 
                 mealTimesDiv.innerHTML += `
                     <div class="meal-time">
                         <strong>${meal}</strong>: ${timeStr}
-                        <div class="range">Range: ${rangeStartStr} - ${rangeEndStr}</div>
+                        <div class="range">${rangeStr}</div>
                     </div>
                 `;
             }
