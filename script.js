@@ -98,12 +98,7 @@ function updateIndicator() {
     return;
   }
 
-  const wakeupTime = new Date(`1970-01-01T${wakeupTimeInput}:00`);
-
-  // if (wakeupTime.getHours() > 13) {
-  //   return;
-  // }
-  
+  const wakeupTime = new Date(`1970-01-01T${wakeupTimeInput}:00`);  
   const startHour = getStartHour();
   const startOfDay = new Date(new Date("1970-01-01T00:00:00").setHours(startHour));
 
