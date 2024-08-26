@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal Time Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+            line-height: 1.6;
+        }
+        label, input {
+            font-size: 1.2em;
+        }
+        input {
+            margin: 10px 0;
+            padding: 5px;
+        }
+        .meal-times {
+            margin-top: 20px;
+        }
+        .meal-time {
+            margin-bottom: 15px;
+        }
+        .range {
+            color: gray;
+            font-size: 0.9em;
+        }
+        .description {
+            margin: 20px 0;
+            font-size: 1.1em;
+            color: #555;
+        }
+        .description a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+        .description a:hover {
+            text-decoration: underline;
+        }
+        footer {
+            margin-top: 50px;
+            font-size: 0.9em;
+            text-align: center;
+            color: #777;
+        }
+        footer a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Meal Time Calculator</h1>
+    <div class="description">
+        Enter your wakeup time below to automatically calculate the optimal times for your meals throughout the day. The ranges provided indicate the flexibility you have for each meal.
+        <br><br>
+        Please note that this tool is not a substitute for professional nutritional advice. The information provided is based on general guidelines from <a href="https://hub.health/program-support-nutrition/" target="_blank">Hub Health</a>. Always consult with a nutritionist or healthcare provider for personalized advice.
+    </div>
+
+    <label for="wakeup-time">Enter your wakeup time (HH:MM):</label>
+    <input type="time" id="wakeup-time" required>
+
+    <div class="meal-times" id="meal-times"></div>
+
+    <footer>
+        <p>View the source code on <a href="https://github.com/Guthers" target="_blank">GitHub</a></p>
+    </footer>
+
+    <script>
+        document.getElementById('wakeup-time').addEventListener('input', calculateMealTimes);
+
+        function calculateMealTimes() {
+            const wakeupTimeInput = document.getElementById('wakeup-time').value;
+            if (!wakeupTimeInput) {
+                return;
+            }
+
+            const wakeupTime = new Date(`1970-01-01T${wakeupTimeInput}:00`);
+
+            const breakfastTime = new Date(wakeupTime.getTime() + 1 * 60 * 60 * 1000);
+            const midMorningSnackTime = new Date(breakfastTime.getTime() + 3 * 60 * 60 * 1000);
+            const lunchTime = new Date(breakfastTime.getTime() + 5 * 60 * 60 * 1000);
+            const arvoSnackTime = new Date(lunchTime.getTime() + 3 * 60 * 60 * 1000);
+            const dinnerTime = new Date(lunchTime.getTime() + 5 * 60 * 60 * 1000);
+
+            const mealTimes = {
+                'Breakfast': {
+                    time: breakfastTime,
+                    rangeStart: new Date(wakeupTime.getTime() + 1 * 60 * 60 * 1000),
+                    rangeEnd: new Date(wakeupTime.getTime() + 1 * 60 * 60 * 1000),
+                },
+                'Mid-morning Snack': {
+                    time: midMorningSnackTime,
+                    rangeStart: new Date(breakfastTime.getTime() + 2 * 60 * 60 * 1000),
+                    rangeEnd: new Date(breakfastTime.getTime() + 3 * 60 * 60 * 1000),
+                },
+                'Lunch': {
+                    time: lunchTime,
+                    rangeStart: new Date(breakfastTime.getTime() + 4 * 60 * 60 * 1000),
+                    rangeEnd: new Date(breakfastTime.getTime() + 5 * 60 * 60 * 1000),
+                },
+                'Afternoon Snack': {
+                    time: arvoSnackTime,
+                    rangeStart: new Date(lunchTime.getTime() + 2 * 60 * 60 * 1000),
+                    rangeEnd: new Date(lunchTime.getTime() + 3 * 60 * 60 * 1000),
+                },
+                'Dinner': {
+                    time: dinnerTime,
+                    rangeStart: new Date(lunchTime.getTime() + 4 * 60 * 60 * 1000),
+                    rangeEnd: new Date(lunchTime.getTime() + 5 * 60 * 60 * 1000),
+                }
+            };
+
+            const mealTimesDiv = document.getElementById('meal-times');
+            mealTimesDiv.innerHTML = '';
+
+            for (let meal in mealTimes) {
+                const mealTime = mealTimes[meal];
+                const timeStr = formatTime(mealTime.time);
+                const rangeStartStr = formatTime(mealTime.rangeStart);
+                const rangeEndStr = formatTime(mealTime.rangeEnd);
+
+                mealTimesDiv.innerHTML += `
+                    <div class="meal-time">
+                        <strong>${meal}</strong>: ${timeStr}
+                        <div class="range">Range: ${rangeStartStr} - ${rangeEndStr}</div>
+                    </div>
+                `;
+            }
+        }
+
+        function formatTime(date) {
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+            return `${hours}:${minutes}`;
+        }
+    </script>
+
+</body>
+</html>
